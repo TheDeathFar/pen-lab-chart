@@ -1,0 +1,52 @@
+# Количество виртуальных машин
+replicaCount: 1
+
+# Проект
+project:
+  create: true
+  name: student-lab-v2
+  template: student
+  resourceQuota:
+    requests:
+      cpu: "5"
+      memory: "10Gi"
+    limits:
+      cpu: "5"
+      memory: "10Gi"
+  administrators:
+    - subject: User
+      name: test-user
+
+# Образ
+image:
+  url: https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+
+# Диск
+disk:
+  name: disk
+  size: 4Gi
+
+# Виртуальная машина
+vm:
+  namePrefix: student
+  cpu: 2
+  memory: 4Gi
+  virtualMachineClassName: generic
+  runPolicy: AlwaysOn
+
+# Cloud-init
+cloudInit:
+  user: student
+  passwordHash: "$6$rounds=4096$ykcmF0DzFvsAPiP.$sXkbiv2V4PjzaOdV4P.LEkAiixLZ/98GFCerGPBmBV9jKM.sulnQSWsAHJHvs7zUIUBmIKgUCbblbSoqktXOn1"
+
+# ttyd
+ttyd:
+  enabled: true
+  port: 7681
+  password: "student123"
+
+# Ingress
+ingress:
+  enabled: true
+  className: nginx
+  hostBase: lab.poligon.cs.vsu.ru

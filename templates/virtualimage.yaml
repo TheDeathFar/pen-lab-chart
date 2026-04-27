@@ -1,0 +1,11 @@
+apiVersion: virtualization.deckhouse.io/v1alpha2
+kind: VirtualImage
+metadata:
+  name: {{ .Release.Name }}-image
+  namespace: {{ include "student-lab.namespace" . }}
+spec:
+  storage: ContainerRegistry
+  dataSource:
+    type: HTTP
+    http:
+      url: {{ .Values.image.url }}

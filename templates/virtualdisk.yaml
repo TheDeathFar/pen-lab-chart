@@ -1,0 +1,18 @@
+{{- $vmCount := .Values.replicaCount | int -}}
+{{- range $i := until $vmCount }}
+---
+apiVersion: virtualization.deckhouse.io/v1alpha2
+kind: VirtualDisk
+metadata:
+  name: {{ $.Values.disk.name }}-{{ $.Release.Name }}-{{ $i }}
+  namespace: {{ include "student-lab.namespace" $ }}
+spec:
+  dataSource:
+    objectRef:
+      kind: VirtualImage
+      name: {{ $.Release.Name }}-image
+    type: ObjectRef
+  persistentVolumeClaim:
+    size: {{ $.Values.disk.size }}
+---
+{{- end }}

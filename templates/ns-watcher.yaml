@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: wait-namespace-{{ .Release.Name }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+
+      # 👇 используем ОБЩИЙ SA (создан отдельно один раз)
+      serviceAccountName: wait-ns-sa
+
+      containers:
+      - name: wait
+        image: bitnami/kubectl:latest
+        command:
+        - sh
+        - -c
+        - |
+          NS="{{ .Values.project.name }}"
+
+          echo "Waiting for namespace: $NS"
+
+          # ждём появления namespace
+          until kubectl get ns "$NS" >/dev/null 2>&1; do
+            sleep 1
+          done
+
+          echo "Namespace exists: $NS"
+
+          # ждём пока он станет Active (или просто стабилизируется)
+          for i in $(seq 1 120); do
+            PHASE=$(kubectl get ns "$NS" -o jsonpath='{.status.phase}' 2>/dev/null || echo "Unknown")
+
+            echo "Phase: $PHASE"
+
+            if [ "$PHASE" = "Active" ]; then
+              echo "Namespace is ready"
+              exit 0
+            fi
+
+            sleep 1
+          done
+
+          echo "Timeout waiting for namespace"
+          exit 1

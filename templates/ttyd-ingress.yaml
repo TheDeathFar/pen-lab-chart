@@ -1,0 +1,28 @@
+{{- if and .Values.ingress.enabled .Values.ttyd.enabled }}
+{{- $vmCount := .Values.replicaCount | int -}}
+{{- range $i := until $vmCount }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "student-lab.vmName" (merge (dict "index" $i) $) }}-ttyd
+  namespace: {{ include "student-lab.namespace" $ }}
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+spec:
+  ingressClassName: {{ $.Values.ingress.className }}
+  rules:
+    - host: {{ $.Values.vm.namePrefix }}-{{ $i }}.{{ $.Values.ingress.hostBase }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "student-lab.vmName" (merge (dict "index" $i) $) }}-ttyd
+                port:
+                  number: {{ $.Values.ttyd.port }}
+---
+{{- end }}
+{{- end }}

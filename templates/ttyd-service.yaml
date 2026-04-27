@@ -1,0 +1,22 @@
+{{- if .Values.ttyd.enabled }}
+{{- $vmCount := .Values.replicaCount | int -}}
+{{- range $i := until $vmCount }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "student-lab.vmName" (merge (dict "index" $i) $) }}-ttyd
+  namespace: {{ include "student-lab.namespace" $ }}
+  labels:
+    {{- include "student-lab.labels" $ | nindent 4 }}
+spec:
+  selector:
+    {{- include "student-lab.labels" $ | nindent 4 }}
+  ports:
+    - name: ttyd
+      protocol: TCP
+      port: {{ $.Values.ttyd.port }}
+      targetPort: {{ $.Values.ttyd.port }}
+---
+{{- end }}
+{{- end }}

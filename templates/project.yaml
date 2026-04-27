@@ -1,0 +1,22 @@
+{{- if .Values.project.create }}
+apiVersion: deckhouse.io/v1alpha2
+kind: Project
+metadata:
+  name: {{ .Values.project.name }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-10"
+spec:
+  description: {{ .Values.project.description | quote }}
+  projectTemplateName: {{ .Values.project.template }}
+  parameters:
+    resourceQuota:
+      requests:
+        cpu: {{ .Values.project.resourceQuota.requests.cpu | quote }}
+        memory: {{ .Values.project.resourceQuota.requests.memory | quote }}
+      limits:
+        cpu: {{ .Values.project.resourceQuota.limits.cpu | quote }}
+        memory: {{ .Values.project.resourceQuota.limits.memory | quote }}
+    administrators:
+{{- toYaml .Values.project.administrators | nindent 6 }}
+{{- end }}
