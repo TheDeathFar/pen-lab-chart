@@ -16,10 +16,10 @@ spec:
   ingressClassName: {{ $.Values.ingress.className }}
   tls:
     - hosts:
-        - {{ $.Values.vm.namePrefix }}-{{ $i }}.{{ $.Values.ingress.hostBase }}
+        - {{ $.Release.Name }}.{{ $.Values.ingress.hostBase }}
       secretName: ttyd-tls-{{ $.Release.Name }}-{{ $i }}
   rules:
-    - host: {{ $.Values.vm.namePrefix }}-{{ $i }}.{{ $.Values.ingress.hostBase }}
+    - host: {{ $.Release.Name }}.{{ $.Values.ingress.hostBase }}
       http:
         paths:
           - path: /
