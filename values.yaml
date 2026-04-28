@@ -49,4 +49,5 @@ ttyd:
 ingress:
   enabled: true
   className: nginx
-  hostBase: lab.poligon.cs.vsu.ru
+  hostBase: poligon.cs.vsu.ru
+  clusterIssuer: selfsigned
