@@ -10,8 +10,14 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    cert-manager.io/cluster-issuer: {{ $.Values.ingress.clusterIssuer | default "selfsigned" }}
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: {{ $.Values.ingress.className }}
+  tls:
+    - hosts:
+        - {{ $.Values.vm.namePrefix }}-{{ $i }}.{{ $.Values.ingress.hostBase }}
+      secretName: ttyd-tls-{{ $.Release.Name }}-{{ $i }}
   rules:
     - host: {{ $.Values.vm.namePrefix }}-{{ $i }}.{{ $.Values.ingress.hostBase }}
       http:
