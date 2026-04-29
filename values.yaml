@@ -29,8 +29,8 @@ disk:
 # Виртуальная машина
 vm:
   namePrefix: student
-  cpu: 2
-  memory: 4Gi
+  cpu: 1
+  memory: 2Gi
   virtualMachineClassName: generic
   runPolicy: AlwaysOn
 
