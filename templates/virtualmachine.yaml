@@ -8,6 +8,7 @@ metadata:
   namespace: {{ include "student-lab.namespace" $ }}
   labels:
     {{- include "student-lab.labels" $ | nindent 4 }}
+    vm-index: "{{ $i }}"
 spec:
   virtualMachineClassName: {{ $.Values.vm.virtualMachineClassName }}
   runPolicy: {{ $.Values.vm.runPolicy }}
