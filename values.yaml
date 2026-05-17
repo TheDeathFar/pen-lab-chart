@@ -38,6 +38,7 @@ vm:
 cloudInit:
   user: student
   passwordHash: "$6$rounds=4096$ykcmF0DzFvsAPiP.$sXkbiv2V4PjzaOdV4P.LEkAiixLZ/98GFCerGPBmBV9jKM.sulnQSWsAHJHvs7zUIUBmIKgUCbblbSoqktXOn1"
+  sshPublicKey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILNIo5B2+UzzAc+ixUuJxCdRLeopVmuNW9XqTAfxMMfG admin@DESKTOP-SDN5N3N
 
 # ttyd
 ttyd:
