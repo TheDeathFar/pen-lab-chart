@@ -12,6 +12,7 @@ metadata:
 spec:
   selector:
     {{- include "student-lab.labels" $ | nindent 4 }}
+    vm-index: "{{ $i }}"
   ports:
     - name: ttyd
       protocol: TCP
