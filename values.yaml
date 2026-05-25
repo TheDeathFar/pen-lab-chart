@@ -28,6 +28,7 @@ disk:
 
 # Виртуальная машина
 vm:
+  nodeSelector: []
   namePrefix: student
   cpu: 1
   memory: 2Gi
