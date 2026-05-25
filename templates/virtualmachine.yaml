@@ -10,6 +10,11 @@ metadata:
     {{- include "student-lab.labels" $ | nindent 4 }}
     vm-index: "{{ $i }}"
 spec:
+  {{- $nodeSelector := index $.Values.vm.nodeSelector $i | default dict }}
+  {{- if $nodeSelector }}
+  nodeSelector:
+    {{- toYaml $nodeSelector | nindent 4 }}
+  {{- end }}
   virtualMachineClassName: {{ $.Values.vm.virtualMachineClassName }}
   runPolicy: {{ $.Values.vm.runPolicy }}
   cpu:
