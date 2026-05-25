@@ -12,6 +12,8 @@ metadata:
 spec:
   virtualMachineClassName: {{ $.Values.vm.virtualMachineClassName }}
   runPolicy: {{ $.Values.vm.runPolicy }}
+  nodeSelector:
+    {{- toYaml $.Values.vm.nodeSelector | nindent 4 }}
   cpu:
     cores: {{ $.Values.vm.cpu }}
   memory:
