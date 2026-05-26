@@ -8,8 +8,8 @@ project:
   template: student
   resourceQuota:
     requests:
-      cpu: "1"
-      memory: "3Gi"
+      cpu: "5"
+      memory: "10Gi"
     limits:
       cpu: "5"
       memory: "10Gi"
