@@ -8,8 +8,8 @@ project:
   template: student
   resourceQuota:
     requests:
-      cpu: "5"
-      memory: "10Gi"
+      cpu: "1"
+      memory: "3Gi"
     limits:
       cpu: "5"
       memory: "10Gi"
@@ -24,7 +24,7 @@ image:
 # Диск
 disk:
   name: disk
-  size: 4Gi
+  size: 3Gi
 
 # Виртуальная машина
 vm:
